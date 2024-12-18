@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+
+    <style>
+        body{
+            
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        }
+        #container{
+           
+            width: 200px;
+            height: 150px;
+            background-color: aquamarine;
+            padding: 20px;
+            
+        }
+        #container input{
+            color:black;
+        }
+    </style>
+</head>
+
+    <body>
+        <div id="output">
+            <p id="outputP"></p>
+        </div>
+        <div id="container">
+            <p>Enter the city: </p>
+            <form id="inputForm">
+    
+                <input type="text" name="Color" value="" id="userData" placeholder="Enter {longitude,latitude}">
+                <!-- <input type="text" name="Color" value="" id="userData2" placeholder="Enter latitude"> -->
+                
+            </form>
+        </div>
+        <script>
+             
+        const form1=document.getElementById('inputForm');
+        const longiIN=document.getElementById('userData');
+        const outputTemp=document.getElementById('outputP');
+        // const latiIN=document.getElementById('userData2');
+                let city;
+                let longi;
+                let lati;
+                let details;
+                let temp;
+            form1.addEventListener('submit',function (form){
+                form.preventDefault();
+                longi=longiIN.value;
+                let coordinates=longi.split(",")
+                console.log(coordinates[0]);
+                console.log(coordinates[1]);
+                let p = fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${coordinates[0]}&lon=${coordinates[1]}&appid=a903ccbc5ba0e5c4b83b5a3debe0482a`)
+                p.then(function (valWe){
+              
+                    return valWe.json();
+                }).then(function (valWeP){
+                    //console.log(valWeP.main.temp);
+                     temp=valWeP.main.temp;
+                     console.log(temp);
+                     outputTemp.innerText=`Current temp at given coordinates is ${temp}`;
+                })
+                longiIN.value="";
+                
+              
+
+})
+            
+  </script>
+    
+</body>
+</html>
